@@ -1,5 +1,5 @@
-import { data } from "../../helpers/constants";
-import { dsDefectInquirer, odpBaseInquirer } from "../../helpers/inquirer";
+import { BACK } from "../../helpers/constants";
+import { dsBaseInquirer, dsDefectInquirer } from "../../helpers/inquirer";
 import {
   assignToQa,
   changeStatus,
@@ -7,7 +7,7 @@ import {
   getDefectDetails,
   getEntitites,
   getStoryDetails,
-} from "./helper";
+} from "./dsHelper";
 
 export async function ds() {
   const functionMapper = {
@@ -15,11 +15,11 @@ export async function ds() {
     FS: fetchStories,
   };
   for (;;) {
-    const choice = await odpBaseInquirer();
-    if (choice.ODP === data.BACK.value) {
+    const choice = await dsBaseInquirer();
+    if (choice.ds === BACK.value) {
       return;
     } else {
-      await functionMapper[choice.ODP]();
+      await functionMapper[choice.ds]();
     }
   }
 }

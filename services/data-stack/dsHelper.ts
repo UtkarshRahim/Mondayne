@@ -1,11 +1,19 @@
-import { data } from "../../helpers/constants";
+import {
+  BACK,
+  DEFECT_DETAILS,
+  GET_CLOUD_USERS,
+  GET_SERVICE_DEF,
+  MY_DEFECTS,
+  MY_STORIES,
+  STORY_DETAILS,
+} from "../../helpers/constants";
 import {
   autoCompleteInquirer,
   basicInquirer,
   dsStatusesInquirer,
   easyInquirer,
 } from "../../helpers/inquirer";
-import { getDs, putDs } from "./cloudManager";
+import { getDs, putDs } from "./dsManager";
 
 export function changeStatus(id: string, status = "") {
   let entityDetails: any;
@@ -92,9 +100,7 @@ export function getEntitites(type) {
   return mode
     .fetcherFn()
     .then((response) =>
-      response && response.data && response.data.length
-        ? response.data
-        : _throw()
+      response && response.data && response.length ? response.data : _throw()
     )
     .then((response) =>
       easyInquirer(formatChoices(response), mode.inquirerName)
@@ -102,26 +108,25 @@ export function getEntitites(type) {
 }
 
 export const getDefects = (skipCheck = false) =>
-  getDs(data.MY_DEFECTS, getDefaultFilter(), skipCheck);
+  getDs(MY_DEFECTS, getDefaultFilter(), skipCheck);
 
 export const getStories = (skipCheck = false) =>
-  getDs(data.MY_STORIES, getDefaultFilter(), skipCheck);
+  getDs(MY_STORIES, getDefaultFilter(), skipCheck);
 
 export const getDefectDetails = (id, skipCheck = false) =>
-  getDs(`${data.DEFECT_DETAILS}/${id}`, { expand: true }, skipCheck);
+  getDs(`${DEFECT_DETAILS}/${id}`, { expand: true }, skipCheck);
 
 export const getStoryDetails = (id, skipCheck = false) =>
-  getDs(`${data.STORY_DETAILS}/${id}`, { expand: true }, skipCheck);
+  getDs(`${STORY_DETAILS}/${id}`, { expand: true }, skipCheck);
 
 const getServiceDefinition = (isDefect) =>
-  getDs(data.GET_SERVICE_DEF + "/" + (isDefect ? "SRVC2022" : "SRVC2020"), {
+  getDs(GET_SERVICE_DEF + "/" + (isDefect ? "SRVC2022" : "SRVC2020"), {
     select: "definition",
     app: "XCRO",
   }).then((resp) => {
     try {
-      return resp.data.definition.find(
-        (def) => def.key === "componentsAffected"
-      ).definition[0].properties.enum;
+      return resp.definition.find((def) => def.key === "componentsAffected")
+        .definition[0].properties.enum;
     } catch {
       return [];
     }
@@ -144,7 +149,7 @@ const getComponents = (serviceDef) =>
 
 const getAllUsers = (_existinchoiceers, name, skipCall = true) =>
   getDs(
-    data.GET_CLOUD_USERS,
+    GET_CLOUD_USERS,
     {
       count: 20,
       select: "name",
@@ -152,7 +157,7 @@ const getAllUsers = (_existinchoiceers, name, skipCall = true) =>
     },
     skipCall
   ).then((resp) =>
-    resp.data.map((users) => ({
+    resp.map((users) => ({
       name: users.name,
       value: { _id: users._id, name: users.name },
     }))
@@ -210,17 +215,17 @@ const initState = (id) => {
   return [
     isDefect,
     isDefect ? getDefectDetails : getStoryDetails,
-    isDefect ? data.DEFECT_DETAILS : data.STORY_DETAILS,
+    isDefect ? DEFECT_DETAILS : STORY_DETAILS,
   ];
 };
 
 export function checkOrEscape(choice, prop) {
-  return choice[prop] === data.BACK.value ? _throw() : choice;
+  return choice[prop] === BACK.value ? _throw() : choice;
 }
 const isDefectCall = (id) => id.includes("DEF");
 
 const formatResponse = (resp, isDefect) =>
-  resp && resp.data && resp.data._id
+  resp && resp.data && resp._id
     ? resp.data
     : _throw("cannot find " + isDefect ? "Defect" : "Story");
 

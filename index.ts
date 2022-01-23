@@ -1,5 +1,5 @@
 import { commandModeMapper } from "./commandMode";
-import { data } from "./helpers/constants";
+import { EXIT } from "./helpers/constants";
 import { services } from "./helpers/general";
 import { defaultInquirer } from "./helpers/inquirer";
 import { connectToRedis } from "./helpers/redis";
@@ -15,9 +15,9 @@ client.then(async () => {
   if (!commandMode) {
     for (;;) {
       console.log("\n ----------------- \n");
-      const ans = await defaultInquirer();
-      if (ans.service !== data.EXIT.value) {
-        await getService(ans.service)();
+      const choice = await defaultInquirer();
+      if (choice.service !== EXIT.value) {
+        await getService(choice.service)();
       } else {
         process.exit(0);
       }

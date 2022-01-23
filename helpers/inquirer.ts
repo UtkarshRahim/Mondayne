@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import { services } from "../helpers/general";
-import { data } from "./constants";
+import { BACK, EXIT } from "./constants";
 
 inquirer.registerPrompt(
   "autocomplete",
@@ -21,7 +21,7 @@ export const defaultInquirer = () => {
     type: "list",
     name: "service",
     message: "Select type",
-    choices: [...Object.keys(services), ...[data.EXIT]],
+    choices: [...Object.keys(services), ...[EXIT]],
   });
 };
 
@@ -31,7 +31,7 @@ export const easyInquirer = (
   message = "Make a selection",
   type = "list"
 ) => {
-  choices.push(data.BACK);
+  choices.push(BACK);
   return basicInquirer({
     type,
     name,
@@ -51,15 +51,15 @@ export function autoCompleteInquirer(name, message, source) {
   ]);
 }
 
-export const odpBaseInquirer = () => {
+export const dsBaseInquirer = () => {
   return basicInquirer({
     type: "list",
-    name: "ODP",
+    name: "ds",
     message: "Select type",
     choices: [
       { name: "Fetch my defects", value: "FD" },
       { name: "Fetch my stories", value: "FS" },
-      data.BACK,
+      BACK,
     ],
   });
 };
@@ -72,21 +72,22 @@ export const gitBaseInquirer = () => {
     choices: [
       { name: "Create branch for story/defect", value: "CBS" },
       { name: "Create Named branch", value: "CNB" },
-      data.BACK,
+      BACK,
     ],
   });
 };
 
-export const workerBaseInquirer = () => {
+export const xcroBaseInquirer = () => {
   return basicInquirer({
     type: "list",
-    name: "DM",
+    name: "env",
     message: "Select type",
     choices: [
       { name: "Dev", value: "Dev" },
       { name: "58", value: "FiveEight" },
       { name: "sit6", value: "sit6" },
-      data.BACK,
+      BACK,
+      EXIT,
     ],
   });
 };
@@ -100,7 +101,7 @@ export const dsDefectInquirer = () => {
       { name: "Assign to QA", value: "ATQ" },
       { name: "Change status", value: "CS" },
       { name: "Peek", value: "P" },
-      data.BACK,
+      BACK,
     ],
   });
 };
