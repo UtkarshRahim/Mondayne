@@ -1,5 +1,6 @@
 import { formatDate, getRandomNumber } from '../../../helpers/misc';
 import { faker } from '@faker-js/faker';
+import { CURRENCY, COUNTRY } from '../../../helpers/constants';
 export const getAccountsJSON = () => {
   const accNo = faker.finance.account();
   return {
@@ -8,26 +9,26 @@ export const getAccountsJSON = () => {
     balances: {
       available: {
         amount: 1000000,
-        currency: 'INR',
+        currency: CURRENCY,
         indicator: 'Credit',
         lastUpdatedOn: null,
       },
       eod: {
         amount: 1000000,
-        currency: 'INR',
+        currency: CURRENCY,
         indicator: 'Credit',
         lastUpdatedOn: null,
       },
       ledger: {
         amount: 1000000,
-        currency: 'INR',
+        currency: CURRENCY,
         indicator: 'Credit',
         lastUpdatedOn: null,
       },
     },
     closedOn: null,
-    currency: 'INR',
-    country: 'IN',
+    currency: CURRENCY,
+    country: COUNTRY,
     customerId: '123',
     extendedAttributes: {
       pan: null,
@@ -91,8 +92,8 @@ export const getDealAccountsJSON = (refId, dealId, accountNumber) => {
           userEdited: false,
         },
       },
-      currency: 'INR',
-      country: 'IN',
+      currency: CURRENCY,
+      country: COUNTRY,
       customerId: '123',
       name: 'ACC',
       status: 'ACTIVE',
@@ -189,7 +190,7 @@ export const getDealJSON = () => {
       dealChecklist: [],
       allowBeneficiaries: false,
       timezoneId: 'Asia/Kolkata',
-      countryId: 'IN',
+      countryId: COUNTRY,
       templateId: 'T1007',
       userId: 'superadmin',
       userName: 'superadmin',
@@ -231,12 +232,17 @@ export const getPartyJSON = (refId, dealId, processingUnits) => {
       dealTemplateId: 'T1007',
       linkedFromMdm: false,
       processingUnits,
-      country: 'IN',
+      country: COUNTRY,
     },
   };
 };
 
-export const getEcommPartyJson = (refId, dealId, processingUnits, debitAccounts) => {
+export const getEcommPartyJson = (
+  refId,
+  dealId,
+  processingUnits,
+  debitAccounts
+) => {
   const partyName = `${faker.company.companyName()}`;
   const participantId = `${partyName}`;
   return {
@@ -265,7 +271,7 @@ export const getEcommPartyJson = (refId, dealId, processingUnits, debitAccounts)
       refId,
       dealTemplateId: 'T1110',
       linkedFromMdm: false,
-      country: 'IN',
+      country: COUNTRY,
       processingUnits,
     },
   };
@@ -326,7 +332,7 @@ export const getPartyAccountsJSON = (parentId, refId, dealId, partyId) => {
         priority: '',
         purposeOfPayment: '',
         charges: '',
-        beneficiaryCurrency: 'INR',
+        beneficiaryCurrency: CURRENCY,
       },
       dealId,
       partyId,

@@ -44,3 +44,8 @@ export const ODP_CREATE_ACCOUNT = 'https://odp.xcro.appveen.com/api/c/XCRO6-DIY/
 export const ODP_LOGIN = 'https://odp.xcro.appveen.com/api/a/rbac/login';
 export const ODP_CHECK = 'https://odp.xcro.appveen.com/api/a/rbac/check';
 export const ODP_LOGIN_KEY = 'ODP_LOGIN_KEY';
+
+
+//values
+export const COUNTRY = 'IN';
+export const CURRENCY = 'INR';

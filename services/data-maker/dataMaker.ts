@@ -1,4 +1,4 @@
-import { DEV, GO_BACK, SIT6 } from '../../helpers/constants';
+import { DEV, EXIT, GO_BACK, SIT6 } from '../../helpers/constants';
 import { dmBaseInquirer, easyInquirer } from '../../helpers/inquirer';
 import { createAccount, createDeal } from './helpers/dmHelper';
 
@@ -12,6 +12,8 @@ export async function dm() {
     const ans = await dmBaseInquirer();
     if (ans.DM === GO_BACK.value) {
       return;
+    } else if (ans.DM === EXIT.value) {
+      process.exit();
     } else {
       await functionMapper[ans.DM]();
     }
@@ -36,6 +38,8 @@ export async function dev() {
     );
     if (ans.dev === GO_BACK.value) {
       return;
+    } else if (ans.dev === EXIT.value) {
+      process.exit();
     } else {
       await fnMapper[ans.dev]();
     }
@@ -62,6 +66,8 @@ export async function sit6() {
     );
     if (ans.dev === GO_BACK.value) {
       return;
+    } else if (ans.dev === EXIT.value) {
+      process.exit();
     } else {
       await fnMapper[ans.dev]();
     }

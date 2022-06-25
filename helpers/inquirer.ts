@@ -32,6 +32,7 @@ export const easyInquirer = (
   type = 'list'
 ) => {
   choices.push(GO_BACK);
+  choices.push(EXIT);
   return basicInquirer({
     type,
     name,

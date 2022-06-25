@@ -18,6 +18,8 @@ export async function odp() {
     const ans = await odpBaseInquirer();
     if (ans.ODP === GO_BACK.value) {
       return;
+    } else if (ans.ODP === EXIT.value) {
+      process.exit();
     } else {
       await functionMapper[ans.ODP]();
     }
