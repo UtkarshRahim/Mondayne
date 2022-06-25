@@ -1,5 +1,5 @@
 {
-  "name": "worker",
+  "name": "mondayne",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "utkarsh",
   "license": "ISC",
   "devDependencies": {
     "ts-node": "^10.4.0",
