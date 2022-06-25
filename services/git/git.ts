@@ -47,10 +47,45 @@ export async function gen10(defectId) {
     });
 }
 
+export async function gen11(defectId) {
+  const branchName = defectId.includes('DEF')
+    ? `defect/${defectId}_1_1`
+    : `story/${defectId}_1_1`;
+  const to = defectId.includes('DEF')
+    ? `defect/${defectId}_dev`
+    : `story/${defectId}_dev`;
+  await genDev(defectId)
+    .then(() => gc11())
+    .then(() => pg())
+    .then(() => createBranch(branchName))
+    .then(() => goToBranch(to))
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 export async function push10(defectId, msg = '', pr = false) {
   const branchName = defectId.includes('DEF')
     ? `defect/${defectId}_1_0`
     : `story/${defectId}_1_0`;
+
+  const to = defectId.includes('DEF')
+    ? `defect/${defectId}_dev`
+    : `story/${defectId}_dev`;
+
+  await pushDev(defectId, msg, pr)
+    .then(() => goToBranch(branchName))
+    .then(() => cherryPick(to))
+    .then(() => gitPush(branchName))
+    .then(() => (pr ? () => changeStatus(defectId, 'PR') : ''))
+    .catch((e) => {
+      console.log(e);
+    });
+}
+export async function push11(defectId, msg = '', pr = false) {
+  const branchName = defectId.includes('DEF')
+    ? `defect/${defectId}_1_1`
+    : `story/${defectId}_1_1`;
 
   const to = defectId.includes('DEF')
     ? `defect/${defectId}_dev`
@@ -86,6 +121,11 @@ export function gc64() {
 
 export function gc10() {
   return executeMultiple(['git checkout release/1.0']).catch((e) => {
+    console.log(e);
+  });
+}
+export function gc11() {
+  return executeMultiple(['git checkout release/1.1']).catch((e) => {
     console.log(e);
   });
 }
